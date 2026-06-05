@@ -1,0 +1,148 @@
+@import "tailwindcss";
+
+:root{
+	--accent: #6366f1; /* indigo-500 */
+	--accent-dark: #4f46e5; /* indigo-600 */
+	--bg: #f8fafc; /* page background */
+	--card: #ffffff; /* surface / cards */
+	--text: #0f172a; /* primary text */
+	--muted: #64748b; /* secondary text */
+}
+
+/* Themes: light variables */
+.theme-indigo{ 
+	--accent:#6366f1; --accent-dark:#4f46e5;
+	--bg: #f8fafc; --card:#ffffff; --text:#0f172a; --muted:#64748b;
+}
+.theme-emerald{ 
+	--accent:#10b981; --accent-dark:#059669;
+	--bg:#ecfdf5; --card:#ffffff; --text:#052e16; --muted:#2f855a;
+}
+.theme-rose{ 
+	--accent:#f43f5e; --accent-dark:#e11d48;
+	--bg:#fff1f2; --card:#ffffff; --text:#3b0b0f; --muted:#be123c;
+}
+.theme-amber{ 
+	--accent:#f59e0b; --accent-dark:#d97706;
+	--bg:#fffbeb; --card:#ffffff; --text:#4a2f00; --muted:#b45309;
+}
+.theme-slate{ 
+	--accent:#64748b; --accent-dark:#334155;
+	--bg:#f8fafc; --card:#ffffff; --text:#0f172a; --muted:#475569;
+}
+
+/* Dark overrides per theme */
+.dark.theme-indigo{
+	--bg:#0b1220; --card:#0f172a; --text:#e6eef8; --muted:#9ca3af;
+	--accent:#6366f1; --accent-dark:#4f46e5;
+}
+.dark.theme-emerald{
+	--bg:#04251b; --card:#062a20; --text:#e6f7ef; --muted:#7fd3a6;
+	--accent:#10b981; --accent-dark:#059669;
+}
+.dark.theme-rose{
+	--bg:#2b0a0e; --card:#3a0e14; --text:#ffecee; --muted:#f4a1b3;
+	--accent:#f43f5e; --accent-dark:#e11d48;
+}
+.dark.theme-amber{
+	--bg:#241803; --card:#2f1b04; --text:#fff7e6; --muted:#f3c078;
+	--accent:#f59e0b; --accent-dark:#d97706;
+}
+.dark.theme-slate{
+	--bg:#0b1220; --card:#0f172a; --text:#e6eef8; --muted:#9aa7b5;
+	--accent:#64748b; --accent-dark:#334155;
+}
+
+/* End theme variables */
+
+/* Headings animations */
+@keyframes fadeUp {
+	from { opacity: 0; transform: translateY(10px); }
+	to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulseAccent {
+	0% { filter: drop-shadow(0 0 0 rgba(0,0,0,0)); }
+	50% { filter: drop-shadow(0 6px 18px rgba(99,102,241,0.18)); }
+	100% { filter: drop-shadow(0 0 0 rgba(0,0,0,0)); }
+}
+
+.animate-fade-up { animation: fadeUp 700ms cubic-bezier(.2,.8,.2,1) both; }
+.animate-pulse-accent { animation: pulseAccent 1800ms ease-in-out infinite; }
+
+/* Underline grow for section titles */
+.title-underline { position: relative; display: inline-block; }
+.title-underline::after {
+	content: '';
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
+	bottom: -8px;
+	width: 0;
+	height: 4px;
+	border-radius: 3px;
+	background: linear-gradient(90deg, var(--accent), var(--accent-dark));
+	transition: width 420ms cubic-bezier(.2,.8,.2,1);
+}
+.title-underline:hover::after { width: 48px; }
+
+/* VS Code-like code block styling */
+.code-editor {
+	position: relative;
+	font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", "Source Code Pro", monospace;
+	background: #0f172a;
+	border: 1px solid rgba(148,163,184,0.18);
+	padding: 14px 16px;
+	border-radius: 12px;
+	color: #e2e8f0;
+	box-shadow: 0 10px 30px rgba(15,23,42,0.18);
+	overflow-x: hidden;
+	overflow-y: auto;
+	min-height: 220px;
+	max-height: 280px;
+}
+.code-editor.dark {
+	background: #020617;
+	border: 1px solid rgba(148,163,184,0.12);
+}
+.code-editor .toolbar{ display:flex; gap:8px; align-items:center; margin-bottom:12px }
+.code-editor .dot{ width:10px; height:10px; border-radius:50% }
+.code-editor .dot.red{ background:#ff5f56 }
+.code-editor .dot.yellow{ background:#ffbd2e }
+.code-editor .dot.green{ background:#27c93f }
+.code-editor pre{ margin:0; white-space:pre-wrap; word-break: break-word; font-size:0.95rem; line-height:1.7; }
+.code-editor code{ display:block; color: inherit; }
+.code-editor .code-keyword { color: #c792ea; }
+.code-editor .code-string { color: #ecc48d; }
+.code-editor .code-number { color: #f78c6c; }
+.code-editor .code-property { color: #89ddff; }
+
+/* subtle left accent matching accent color */
+.code-editor::before{
+	content: '';
+	position: absolute;
+	top: 16px;
+	bottom: 16px;
+	left: 8px;
+	width: 4px;
+	border-radius: 6px;
+	background: linear-gradient(180deg, var(--accent), var(--accent-dark));
+}
+
+/* subtle floating animation for code editor */
+@keyframes floaty {
+	0% { transform: translateY(0px); }
+	50% { transform: translateY(-6px) rotate(-0.2deg); }
+	100% { transform: translateY(0px); }
+}
+.code-editor.animate-float{ animation: floaty 6s ease-in-out infinite; }
+
+/* caret */
+.code-editor .caret{
+	display: inline-block;
+	margin-left: 4px;
+	color: var(--accent);
+	opacity: 1;
+	animation: blink 1s steps(2, start) infinite;
+}
+@keyframes blink{ 0%{opacity:1} 50%{opacity:0} 100%{opacity:1} }
